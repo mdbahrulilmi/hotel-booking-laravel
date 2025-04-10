@@ -13,11 +13,21 @@ return new class extends Migration
     {
         Schema::create('hotels', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->text('location');
+            $table->string('code')->unique();
             $table->text('description');
-            $table->float('rating');
+            $table->string('street_address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('postal_code');
+            $table->string('phone_number')->nullable();
+            $table->decimal('rating', 3, 2)->default(0);
+            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->boolean('is_verified')->default(false);
+            $table->json('images')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

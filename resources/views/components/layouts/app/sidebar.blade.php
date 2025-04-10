@@ -7,27 +7,65 @@
         <flux:sidebar sticky stashable class="border-r border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2" wire:navigate>
-                <x-app-logo />
+            <a href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2 text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight" wire:navigate>
+                Dashboard
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                <flux:navlist.group :heading="__('Main Menu')" class="grid">
+                    <flux:navlist.item 
+                        icon="home" 
+                        :href="route('dashboard')" 
+                        :current="request()->routeIs('dashboard')" 
+                        wire:navigate>
+                        {{ __('Dashboard') }}
+                    </flux:navlist.item>
+
+                    <flux:navlist.item 
+                        icon="calendar-days" 
+                        :href="route('bookings.index')" 
+                        :current="request()->routeIs('bookings.index')" 
+                        wire:navigate>
+                        {{ __('My Bookings') }}
+                    </flux:navlist.item>
+                    <flux:navlist.item 
+                        icon="chat-bubble-left" 
+                        :href="route('messages.index')" 
+                        :current="request()->routeIs('messages.index')" 
+                        wire:navigate>
+                        {{ __('Messages') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Hotel Manager')" class="grid">
+                    <flux:navlist.item 
+                        icon="building-office" 
+                        :href="route('hotels.index')" 
+                        :current="request()->routeIs('hotels.index')" 
+                        wire:navigate>
+                        {{ __('My Hotels') }}
+                    </flux:navlist.item>
+
+                    <flux:navlist.item 
+                        icon="layout-grid" 
+                        :href="route('rooms.index')" 
+                        :current="request()->routeIs('rooms.index')" 
+                        wire:navigate>
+                        {{ __('Room Management') }}
+                    </flux:navlist.item>
+
+                    <flux:navlist.item 
+                        icon="clipboard-document-list" 
+                        :href="route('incoming-bookings.index')" 
+                        :current="request()->routeIs('incoming-bookings.index')" 
+                        wire:navigate>
+                        {{ __('Incoming Bookings') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
+
             <flux:spacer />
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
 
             <!-- Desktop User Menu -->
             <flux:dropdown position="bottom" align="start">

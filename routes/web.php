@@ -17,6 +17,35 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+
+    
+    Route::prefix('/hotel')->group(function(){
+        Volt::route('/', 'hotels.index')->name('hotels.index');
+        Volt::route('/create', 'hotels.create')->name('hotels.create');
+        Volt::route('/update', 'hotels.update')->name('hotels.update');
+    });
+
+    Route::prefix('/rooms')->group(function(){
+        Volt::route('/', 'rooms.index')->name('rooms.index');
+        Volt::route('/detail', 'rooms.detail')->name('rooms.detail');
+        Volt::route('/create', 'rooms.create')->name('rooms.create');
+        Volt::route('/update', 'rooms.update')->name('rooms.update');
+    });
+
+    Route::prefix('/bookings')->group(function(){
+        Volt::route('/', 'bookings.index')->name('bookings.index');
+        // Volt::route('/create', 'bookings.create')->name('bookings.create');
+    });
+
+    Route::prefix('/incoming-bookings')->group(function(){
+        Volt::route('/', 'incoming-bookings.index')->name('incoming-bookings.index');
+        // Volt::route('/create', 'incoming-bookings.create')->name('incoming-bookings.create');
+    });
+
+    Route::prefix('/messages')->group(function(){
+        Volt::route('/', 'messages.index')->name('messages.index');
+        // Volt::route('/create', 'messages.create')->name('messages.create');
+    });
 });
 
 require __DIR__.'/auth.php';

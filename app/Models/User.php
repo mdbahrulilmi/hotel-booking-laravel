@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use App\Models\Booking;
+use App\Models\User;
 
 class User extends Authenticatable
 {
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function booking(): hasMany
     {
         return $this->hasMany(Booking::class);
+    }
+    
+    public function hotel(): hasOne
+    {
+        return $this->hasOne(Hotel::class);
     }
 }
