@@ -21,16 +21,32 @@
               </tr>
             </thead>
             <tbody>
+              @foreach ($rooms as $room)
+              
               <tr>
-                <td class="px-4 py-2 border-b ">1</td>
-                <td class="px-4 py-2 border-b ">Deluxe Room</td>
-                <td class="px-4 py-2 border-b ">Rp 500.000</td>
+                <td class="px-4 py-2 border-b ">
+                  {{ $loop->iteration }}
+                </td>
+                <td class="px-4 py-2 border-b ">
+                  {{$room->name}}
+                </td>
+                <td class="px-4 py-2 border-b ">
+                  {{$room->price_per_night}}
+                </td>
                 <td class="px-4 py-2 border-b">
-                  <button class="text-blue-600 hover:underline mr-2 font-normal">Edit</button>
-                  <button class="text-red-600 hover:underline">Delete</button>
+                  <a href="{{route('rooms.detail',$room->id)}}"><button class="text-blue-600 hover:underline mr-2 font-normal">Detail</button>
+                  </a>
+                  <a href="{{route('rooms.update',$room->id)}}"><button class="text-blue-600 hover:underline mr-2 font-normal">Edit</button>
+                  </a>
+                  <button class="text-red-600 hover:underline"
+                  type="button"
+                  wire:click="delete({{ $room->id }})">
+                    Delete
+                  </button>
                 </td>
               </tr>
-              <!-- Tambah baris lain di sini -->
+
+              @endforeach
             </tbody>
           </table>
         </div>

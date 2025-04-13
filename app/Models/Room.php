@@ -13,7 +13,12 @@ class Room extends Model
 {
     /** @use HasFactory<\Database\Factories\RoomsFactory> */
     use HasFactory;
+    protected $guarded = ['id'];
 
+    protected $casts = [
+        'facilities' => 'array',
+        'images' => 'array',
+    ];
 
     public function hotel(): belongsTo
     {

@@ -27,9 +27,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/rooms')->group(function(){
         Volt::route('/', 'rooms.index')->name('rooms.index');
-        Volt::route('/detail', 'rooms.detail')->name('rooms.detail');
+        Volt::route('/detail/{id}', 'rooms.detail')->name('rooms.detail');
         Volt::route('/create', 'rooms.create')->name('rooms.create');
-        Volt::route('/update', 'rooms.update')->name('rooms.update');
+        Volt::route('/update/{id}', 'rooms.update')->name('rooms.update');
     });
 
     Route::prefix('/bookings')->group(function(){

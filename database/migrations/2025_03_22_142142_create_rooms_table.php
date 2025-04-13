@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->ondelete('cescade');
+            $table->foreignId('hotel_id')->constrained()->ondelete('cescade');
             $table->string('name');
             $table->string('type');
             $table->text('description');
