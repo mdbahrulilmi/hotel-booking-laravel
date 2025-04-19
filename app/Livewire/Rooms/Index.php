@@ -17,6 +17,9 @@ class Index extends Component
 
     public function mount()
     {
+        if(auth()->user()->hotel === null){
+            return $this->redirectRoute('hotels.create');
+        }
         $this->loadRooms();
     }
     

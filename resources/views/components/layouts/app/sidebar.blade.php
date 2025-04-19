@@ -8,7 +8,7 @@
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <a href="{{ route('dashboard') }}" class="mr-5 flex items-center space-x-2 text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight" wire:navigate>
-                Dashboard
+                Menu
             </a>
 
             <flux:navlist variant="outline">
@@ -19,6 +19,14 @@
                         :current="request()->routeIs('dashboard')" 
                         wire:navigate>
                         {{ __('Dashboard') }}
+                    </flux:navlist.item>
+                    
+                    <flux:navlist.item 
+                        icon="key" 
+                        :href="route('rent')" 
+                        :current="request()->routeIs('rent')" 
+                        wire:navigate>
+                        {{ __('Rent') }}
                     </flux:navlist.item>
 
                     <flux:navlist.item 

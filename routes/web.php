@@ -18,7 +18,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
-    
+    Volt::route('/rent', 'rent')->name('rent');
+
     Route::prefix('/hotel')->group(function(){
         Volt::route('/', 'hotels.index')->name('hotels.index');
         Volt::route('/create', 'hotels.create')->name('hotels.create');
@@ -44,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/messages')->group(function(){
         Volt::route('/', 'messages.index')->name('messages.index');
-        // Volt::route('/create', 'messages.create')->name('messages.create');
+        Volt::route('/{id}/{room?}', 'messages.message')->name('messages.message');
     });
 });
 

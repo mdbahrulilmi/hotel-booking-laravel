@@ -70,4 +70,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Hotel::class);
     }
+
+    // Relasi untuk pesan yang dikirim oleh pengguna
+    public function sentMessages()
+    {
+        return $this->hasMany(LiveChat::class, 'send_id');
+    }
+
+    // Relasi untuk pesan yang diterima oleh pengguna
+    public function receivedMessages()
+    {
+        return $this->hasMany(LiveChat::class, 'recv_id');
+    }
 }

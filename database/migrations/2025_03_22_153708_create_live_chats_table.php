@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('live_chats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('send_id');
+            $table->unsignedBigInteger('recv_id');
+            $table->unsignedBigInteger('room_id')->nullable();
+            $table->text('message');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('send_id')->references('id')->on('users');
+            $table->foreign('recv_id')->references('id')->on('users');
             $table->foreign('room_id')->references('id')->on('rooms');
         });
     }
