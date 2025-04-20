@@ -35,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/bookings')->group(function(){
         Volt::route('/', 'bookings.index')->name('bookings.index');
-        // Volt::route('/create', 'bookings.create')->name('bookings.create');
+        Volt::route('/create/{id}', 'bookings.create')->name('bookings.create');
     });
 
     Route::prefix('/incoming-bookings')->group(function(){

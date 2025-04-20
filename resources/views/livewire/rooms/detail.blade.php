@@ -52,9 +52,9 @@
           <a href="{{route('messages.message',[$owner,$room->id])}}"><button class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow mr-3">
             Message
           </button></a>
-          <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg shadow">
+          <a href="{{route('bookings.create',[$room->id])}}"><button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-lg shadow">
             Booking Now
-          </button>
+          </button></a>
         </div>
       </div>
       
