@@ -56,14 +56,28 @@ class Create extends Component
 
     public function save()
     {
-        if($this->uploadedImages != null){
+        $this->validate([
+            'hotel_id' => 'required|exists:hotels,id',
+            'name' => 'required|string|max:255',
+            'type' => 'required|string|max:100',
+            'description' => 'nullable|string|max:500',
+            'price_per_night' => 'required|numeric|min:0',
+            'available_quantity' => 'required|integer|min:1',
+            'capacity' => 'required|integer|min:1',
+            'facilities' => 'required|array',
+            'facilities.*' => 'string',
+            'uploadedImages' => 'nullable|array',
+            'uploadedImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($this->uploadedImages != null) {
             $pathImages = [];
             foreach ($this->uploadedImages as $image) {
-                $path = $image->store('images','public');
+                $path = $image->store('images', 'public');
                 $pathImages[] = $path;
             }
         }
-        
+
         Room::create([
             'hotel_id' => $this->hotel_id,
             'name' => $this->name,
@@ -76,11 +90,12 @@ class Create extends Component
             'images' => json_encode($pathImages),
             'status' => $this->status,
         ]);
-    
+
         session()->flash('status', 'Post successfully updated.');
         $this->reset('images');
         return $this->redirectRoute('rooms.index');
     }
+
 
     public function render()
     {

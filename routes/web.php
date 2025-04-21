@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::redirect('/', '/login', 301);
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

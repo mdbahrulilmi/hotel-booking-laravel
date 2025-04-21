@@ -32,16 +32,23 @@ class Message extends Component
 
     public function create()
     {
+        $this->validate([
+            'recv_id' => 'required|exists:users,id',
+            'send_id' => 'required|exists:users,id',
+            'message' => 'required|string|max:500',
+        ]);
+
         LiveChat::create($this->only(['recv_id','send_id','room_id','message']));
         $this->reset(['message']);
         $this->allMessages = LiveChat::where(function ($q) {
             $q->where('send_id', auth()->id())
-              ->where('recv_id', $this->recv_id);
+            ->where('recv_id', $this->recv_id);
         })->orWhere(function ($q) {
             $q->where('send_id', $this->recv_id)
-              ->where('recv_id', auth()->id());
+            ->where('recv_id', auth()->id());
         })->get();
     }
+
     
     public function render()
     {

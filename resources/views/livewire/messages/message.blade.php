@@ -1,4 +1,4 @@
-<div class="max-w-2xl flex flex-col h-screen">
+<div class="max-w-4xl flex flex-col h-screen">
 
   <!-- Header -->
   <div class="px-4 py-3 border-b flex items-center gap-3">

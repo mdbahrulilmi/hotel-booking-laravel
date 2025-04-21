@@ -6,6 +6,7 @@
             <tr>
                 <th class="px-4 py-2 text-left">Booking ID</th>
                 <th class="px-4 py-2 text-left">Room</th>
+                <th class="px-4 py-2 text-left">Guest</th>
                 <th class="px-4 py-2 text-left">Check-in</th>
                 <th class="px-4 py-2 text-left">Check-out</th>
                 <th class="px-4 py-2 text-left">Status</th>
@@ -17,6 +18,7 @@
             @foreach ($bookings as $item)
             <tr>
                 <td class="px-4 py-2 border-t">{{$item->id}}</td>
+                <td class="px-4 py-2 border-t">{{$item->user->name}}</td>
                 <td class="px-4 py-2 border-t">{{$item->room->name}}</td>
                 <td class="px-4 py-2 border-t">{{$item->check_in}}</td>
                 <td class="px-4 py-2 border-t">{{$item->check_out}}</td>

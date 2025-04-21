@@ -53,32 +53,48 @@ class Update extends Component
         $this->uploadedImages = array_values($this->uploadedImages);
     }
     
-    public function save(){
-        $pathImages = [];
-        if($this->uploadedImages != null){
-            foreach ($this->uploadedImages as $image) {
-                if ($image instanceof \Illuminate\Http\UploadedFile) {
-                    $path = $image->store('images','public');
-                    $pathImages[] = $path;
-                }else{
-                    $pathImages[] = $image;
-                }
-            }
-        }   
+    public function save()
+{
+    $this->validate([
+        'name' => 'required|string|max:255',
+        'type' => 'required|string|max:100',
+        'description' => 'nullable|string|max:500',
+        'price_per_night' => 'required|numeric|min:0',
+        'available_quantity' => 'required|integer|min:1',
+        'capacity' => 'required|integer|min:1',
+        'facilities' => 'required|array',
+        'facilities.*' => 'string',
+        'uploadedImages' => 'nullable|array',
+        'uploadedImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        $this->room->update([
-            'name' => $this->name,
-            'type' => $this->type,
-            'description' => $this->description,
-            'price_per_night' => $this->price_per_night,
-            'available_quantity' => $this->available_quantity,
-            'capacity' => $this->capacity,
-            'facilities' => json_encode($this->facilities),
-            'images' => json_encode($pathImages),
-        ]);
-        session()->flash('success', 'Room updated successfully.');
-        return $this->redirectRoute('rooms.index');
+    $pathImages = [];
+    if ($this->uploadedImages != null) {
+        foreach ($this->uploadedImages as $image) {
+            if ($image instanceof \Illuminate\Http\UploadedFile) {
+                $path = $image->store('images', 'public');
+                $pathImages[] = $path;
+            } else {
+                $pathImages[] = $image;
+            }
+        }
     }
+
+    $this->room->update([
+        'name' => $this->name,
+        'type' => $this->type,
+        'description' => $this->description,
+        'price_per_night' => $this->price_per_night,
+        'available_quantity' => $this->available_quantity,
+        'capacity' => $this->capacity,
+        'facilities' => json_encode($this->facilities),
+        'images' => json_encode($pathImages),
+    ]);
+
+    session()->flash('success', 'Room updated successfully.');
+    return $this->redirectRoute('rooms.index');
+    }
+
 
     public function render()
     {

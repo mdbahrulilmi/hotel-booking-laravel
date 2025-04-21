@@ -1,4 +1,4 @@
-<div     :title="__('Dashboard')">
+<x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-6 rounded-xl max-w-4xl">
 
         {{-- Welcome Section --}}
@@ -11,14 +11,14 @@
         <div class="grid gap-4 md:grid-cols-2">
             <div class="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-sm border border-neutral-200 dark:border-neutral-700">
                 <label class="text-sm text-gray-500 dark:text-neutral-400 font-medium">Total Bookings</label>
-                <h1 class="text-5xl font-bold text-gray-900 dark:text-whit  e mt-4">{{count($booking)}}</h1>
+                <h1 class="text-5xl font-bold text-gray-900 dark:text-white mt-4">5</h1>
             </div>
             <div class="bg-white dark:bg-neutral-900 rounded-xl p-6 shadow-sm border border-neutral-200 dark:border-neutral-700">
                 <label class="text-sm text-gray-500 dark:text-neutral-400 font-medium">Upcoming Booking</label>
                 <div class="mt-4 text-gray-800 dark:text-neutral-200">
-                    <p class="font-medium">{{$booking->first()->room->hotel->name ?? ''}}</p>
-                    <p class="text-sm">{{$booking->first()->check_in ?? ''}}</p>
-                    <span class="inline-flex mt-2 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">{{$booking->first()->status ?? ''}}</span>
+                    <p class="font-medium">Villa Anggrek</p>
+                    <p class="text-sm">April 20, 2025</p>
+                    <span class="inline-flex mt-2 rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">Confirmed</span>
                 </div>
             </div>
         </div>
@@ -36,15 +36,21 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                        @foreach ($booking as $item)
                         <tr>
-                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">{{$item->room->hotel->name}}</td>
-                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">{{$item->check_in}}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">Villa Anggrek</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">April 20, 2025</td>
                             <td class="px-4 py-2 text-sm">
-                                <span class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">{{$item->status}}</span>
+                                <span class="inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">Confirmed</span>
                             </td>
                         </tr>
-                        @endforeach
+                        <tr>
+                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">Hotel Sakura</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 dark:text-neutral-200">May 3, 2025</td>
+                            <td class="px-4 py-2 text-sm">
+                                <span class="inline-flex rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Pending</span>
+                            </td>
+                        </tr>
+                        {{-- Tambah data dinamis dari controller jika pakai Livewire --}}
                     </tbody>
                 </table>
             </div>
@@ -57,4 +63,4 @@
             </a>
         </div>
     </div>
-</div   >
+</x-layouts.app>

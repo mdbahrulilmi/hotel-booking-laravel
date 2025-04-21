@@ -56,25 +56,42 @@ class Update extends Component
     
     public function save()
     {
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'street_address' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'postal_code' => 'required|string|max:20',
+            'phone_number' => 'required|string|max:20',
+            'uploadedImages' => 'nullable|array',
+            'uploadedImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         $pathImages = [];
-        if($this->uploadedImages != null){
+        if ($this->uploadedImages) {
             foreach ($this->uploadedImages as $image) {
                 if ($image instanceof \Illuminate\Http\UploadedFile) {
-                    $path = $image->store('images','public');
+                    $path = $image->store('images', 'public');
                     $pathImages[] = $path;
-                }else{
+                } else {
                     $pathImages[] = $image;
                 }
             }
-        }   
-        if($this->myHotel !== null){
-            $this->myHotel->update(array_merge($this->only(['name', 'street_address', 'description', 'city', 'state', 'postal_code', 'phone_number']), ['images' => json_encode($pathImages)]
+        }
+
+        if ($this->myHotel !== null) {
+            $this->myHotel->update(array_merge(
+                $this->only(['name', 'street_address', 'description', 'city', 'state', 'postal_code', 'phone_number']),
+                ['images' => json_encode($pathImages)]
             ));
 
-        session()->flash('success', 'Hotel updated successfully.');
-         }
+            session()->flash('success', 'Hotel updated successfully.');
+        }
+
         return $this->redirectRoute('hotels.index');
     }
+
     public function render()
     {
         return view('livewire.hotels.update',[
