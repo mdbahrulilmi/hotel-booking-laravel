@@ -45,41 +45,41 @@ class Create extends Component
         $this->totalPrice = max($days, 1) * $this->price_per_night;
     }
 
-    public function save()
-    {
-        $this->validate([
-            'payment_method' => 'required|string|in:credit_card,bank_transfer,ewallet,cash',
-            'payment_sub_option' => 'required_if:payment_method,credit_card,bank_transfer,ewallet|string',
-            'checkin' => 'required|date|after:today',
-            'checkout' => 'required|date|after:checkin',
-        ]);
-    
-        if (in_array($this->payment_method, ['credit_card', 'bank_transfer', 'ewallet'])) {
-            $this->payment_type = $this->payment_sub_option;
-        } elseif ($this->payment_method === 'cash') {
-            $this->payment_type = 'Qris';
-        } else {
-            $this->payment_type = null;
-        }
-    
-        if (!$this->payment_method || !$this->payment_type) {
-            session()->flash('error', 'Silakan pilih metode dan sub-pilihan pembayaran!');
-            return;
-        }
-    
-        Booking::create([
-            'user_id' => auth()->id(),
-            'room_id' => $this->room->id,
-            'check_in' => $this->checkin,
-            'check_out' => $this->checkout,
-            'payment_method' => $this->payment_method,
-            'payment_type' => $this->payment_type,
-            'status' => 'pending',
-        ]);
-    
-        return $this->redirectRoute('bookings.index');
+   public function save()
+{
+    $this->validate([
+        'payment_method' => 'required|string|in:credit_card,bank_transfer,ewallet,cash',
+        'payment_sub_option' => 'required_if:payment_method,credit_card,bank_transfer,ewallet|string',
+        'checkin' => 'required',
+        'checkout' => 'required|date|after:checkin',
+    ]);
+
+    if (in_array($this->payment_method, ['credit_card', 'bank_transfer', 'ewallet'])) {
+        $this->payment_type = $this->payment_sub_option;
+    } elseif ($this->payment_method === 'cash') {
+        $this->payment_type = 'Qris';
+    } else {
+        $this->payment_type = null;
     }
-    
+
+    if (!$this->payment_method || !$this->payment_type) {
+        session()->flash('error', 'Silakan pilih metode dan sub-pilihan pembayaran!');
+        return;
+    }
+
+    Booking::create([
+        'user_id' => auth()->id(),
+        'room_id' => $this->room->id,
+        'check_in' => $this->checkin,
+        'check_out' => $this->checkout,
+        'payment_method' => $this->payment_method,
+        'payment_type' => $this->payment_type,
+        'status' => 'pending',
+    ]);
+
+    return $this->redirectRoute('bookings.index');
+}
+
 
 
     public function render()

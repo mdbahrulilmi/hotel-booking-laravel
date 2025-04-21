@@ -12,7 +12,7 @@ class Rent extends Component
 
     public function mount()
     {
-        $this->room = Room::all();
+        $this->room = Room::where('status','active')->get();
     }
 
     public function render()

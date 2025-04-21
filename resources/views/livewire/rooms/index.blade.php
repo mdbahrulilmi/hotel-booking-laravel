@@ -17,6 +17,7 @@
                 <th class="px-4 py-2 text-left">No</th>
                 <th class="px-4 py-2 text-left">Room</th>
                 <th class="px-4 py-2 text-left">Price / Night</th>
+                <th class="px-4 py-2 text-left">Status</th>
                 <th class="px-4 py-2 text-left">Action</th>
               </tr>
             </thead>
@@ -34,15 +35,28 @@
                   {{$room->price_per_night}}
                 </td>
                 <td class="px-4 py-2 border-b">
+                  {{$room->status}}
+                </td>
+                <td class="px-4 py-2 border-b">
                   <a href="{{route('rooms.detail',$room->id)}}"><button class="text-blue-600 hover:underline mr-2 font-normal">Detail</button>
                   </a>
                   <a href="{{route('rooms.update',$room->id)}}"><button class="text-blue-600 hover:underline mr-2 font-normal">Edit</button>
                   </a>
-                  <button class="text-red-600 hover:underline"
-                  type="button"
-                  wire:click="delete({{ $room->id }})">
-                    Delete
-                  </button>
+                  @if ($room->status === 'deactive')
+                    <button class="text-red-600 hover:underline"
+                    type="button"
+                    wire:click="active({{ $room->id }})">
+                    active
+                    </button>
+                  </td>
+                  @else
+                    <button class="text-red-600 hover:underline"
+                    type="button"
+                    wire:click="deactive({{ $room->id }})">
+                      Deactive
+                    </button>
+                  @endif
+                  
                 </td>
               </tr>
 

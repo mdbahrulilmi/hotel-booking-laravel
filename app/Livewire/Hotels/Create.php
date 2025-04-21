@@ -51,39 +51,55 @@ class Create extends Component
         $this->uploadedImages = array_values($this->uploadedImages);
     }
 
-    public function save(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:100|unique:hotels,code',
-            'street_address' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'postal_code' => 'required|string|max:20',
-            'phone_number' => 'required|string|max:20',
-            'user_id' => 'required|exists:users,id',
-            'rating' => 'nullable|numeric|min:0|max:5',
-            'status' => 'required|in:active,inactive',
-            'is_verified' => 'required|boolean',
-            'images' => 'nullable|array',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+    public function save()
+{
+    $this->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string|max:500',
+        'street_address' => 'required|string|max:255',
+        'city' => 'required|string|max:100',
+        'state' => 'required|string|max:100',
+        'postal_code' => 'required|string|max:20',
+        'phone_number' => 'required|string|max:20',
+        'status' => 'required|in:active,inactive',
+        'is_verified' => 'required|boolean',
+        'uploadedImages' => 'required|array',
+        'uploadedImages.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        $pathImages = [];
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-                $pathImages[] = $image->store('images/hotels', 'public');
-            }
+    $pathImages = [];
+    if ($this->uploadedImages != null) {
+        foreach ($this->uploadedImages as $image) {
+            $path = $image->store('images', 'public');
+            $pathImages[] = $path;
         }
-
-        $hotelData = array_merge(
-            $validated,
-            ['images' => json_encode($pathImages)]
-        );
-        Hotel::create($hotelData);
-        return redirect()->route('hotels.index')->with('success', 'Hotel berhasil ditambahkan.');
     }
+
+    $this->user_id = auth()->id();
+
+    if ($this->myHotel == null) {
+        $words = explode(' ', $this->name);
+        $words_code = strtoupper(implode('', array_map(fn($k) => substr($k, 0, 1), array_slice($words, 0, 3))));
+        $random_number = rand(100, 999);
+        $this->code = $words_code . $random_number;
+        $this->rating = 0;
+
+        Hotel::create(
+            array_merge(
+                $this->only([
+                    'hotel_id', 'name', 'code', 'description', 'street_address', 'city', 'state', 
+                    'postal_code', 'phone_number', 'rating', 'user_id', 'status', 'is_verified'
+                ]),
+                ['images' => json_encode($pathImages)]
+            )
+        );            
+
+        session()->flash('status', 'Hotel successfully updated.');
+    }
+
+    // Redirect ke halaman index hotel
+    return $this->redirectRoute('hotels.index');
+}
 
     public function render()
     {

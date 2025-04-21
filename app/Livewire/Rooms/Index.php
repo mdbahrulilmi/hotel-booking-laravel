@@ -24,9 +24,20 @@ class Index extends Component
     }
     
 
-    public function delete($id){
+    public function deactive($id){
         $room = ROOM::findOrFail($id);
-        $room->delete();
+        $room->update(
+            ['status' => 'deactive']
+        );
+
+        $this->loadRooms();
+    }
+   
+    public function active($id){
+        $room = ROOM::findOrFail($id);
+        $room->update(
+            ['status' => 'active']
+        );
 
         $this->loadRooms();
     }

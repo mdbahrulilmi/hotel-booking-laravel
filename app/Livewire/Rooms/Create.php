@@ -55,7 +55,8 @@ class Create extends Component
   
 
     public function save()
-    {
+{
+    try {
         $this->validate([
             'hotel_id' => 'required|exists:hotels,id',
             'name' => 'required|string|max:255',
@@ -70,8 +71,9 @@ class Create extends Component
             'uploadedImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $pathImages = [];
+
         if ($this->uploadedImages != null) {
-            $pathImages = [];
             foreach ($this->uploadedImages as $image) {
                 $path = $image->store('images', 'public');
                 $pathImages[] = $path;
@@ -91,10 +93,15 @@ class Create extends Component
             'status' => $this->status,
         ]);
 
-        session()->flash('status', 'Post successfully updated.');
+        session()->flash('status', 'Room successfully created.');
         $this->reset('images');
         return $this->redirectRoute('rooms.index');
+        
+    } catch (\Throwable $e) {
+        \Log::error('Room save failed: ' . $e->getMessage());
+        session()->flash('error', 'Terjadi kesalahan saat menyimpan data.');
     }
+}
 
 
     public function render()
