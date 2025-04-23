@@ -64,8 +64,7 @@ class Update extends Component
             'state' => 'required|string|max:100',
             'postal_code' => 'required|string|max:20',
             'phone_number' => 'required|string|max:20',
-            'uploadedImages' => 'nullable|array',
-            'uploadedImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'uploadedImages' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $pathImages = [];
