@@ -44,7 +44,7 @@
                         {{ __('Messages') }}
                     </flux:navlist.item>
                 </flux:navlist.group>
-
+                @if(auth()->user()->type === 'owner')
                 <flux:navlist.group :heading="__('Hotel Manager')" class="grid">
                     <flux:navlist.item 
                         icon="building-office" 
@@ -70,6 +70,34 @@
                         {{ __('Incoming Bookings') }}
                     </flux:navlist.item>
                 </flux:navlist.group>
+                @endif
+                @if(auth()->user()->type === 'admin')
+                <flux:navlist.group :heading="__('Admin')" class="grid">
+                    <flux:navlist.item 
+                        icon="users" 
+                        :href="route('admin.users')" 
+                        :current="request()->routeIs('admin.users')" 
+                        wire:navigate>
+                        {{ __('All Users') }}
+                    </flux:navlist.item>
+
+                    <flux:navlist.item 
+                        icon="link" 
+                        :href="route('admin.transaction')" 
+                        :current="request()->routeIs('admin.transaction')" 
+                        wire:navigate>
+                        {{ __('All Transaction') }}
+                    </flux:navlist.item>
+
+                    <flux:navlist.item 
+                        icon="question-mark-circle" 
+                        :href="route('admin.services')" 
+                        :current="request()->routeIs('admin.services')" 
+                        wire:navigate>
+                        {{ __('Customer Services') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+                @endif
             </flux:navlist>
 
 

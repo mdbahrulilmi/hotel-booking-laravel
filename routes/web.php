@@ -17,6 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('/dashboard', 'dashboard')->name('dashboard');
 
     Volt::route('/rent', 'rent')->name('rent');
+    Volt::route('/detail/{id}', 'rooms.detail')->name('rooms.detail');
 
     Route::prefix('/bookings')->group(function(){
         Volt::route('/', 'bookings.index')->name('bookings.index');
@@ -31,7 +32,6 @@ Route::middleware(['auth'])->group(function () {
         Volt::route('/', 'messages.index')->name('messages.index');
         Volt::route('/{id}/{room?}', 'messages.message')->name('messages.message');
     });
-    Route::middleware(typeAccount::class.':super_admin')->group(function(){
         Route::middleware(typeAccount::class.':owner')->group(function(){
             Route::prefix('/hotel')->group(function(){
                 Volt::route('/', 'hotels.index')->name('hotels.index');
@@ -41,7 +41,6 @@ Route::middleware(['auth'])->group(function () {
         
             Route::prefix('/rooms')->group(function(){
                 Volt::route('/', 'rooms.index')->name('rooms.index');
-                Volt::route('/detail/{id}', 'rooms.detail')->name('rooms.detail');
                 Volt::route('/create', 'rooms.create')->name('rooms.create');
                 Volt::route('/update/{id}', 'rooms.update')->name('rooms.update');
             });
@@ -51,8 +50,12 @@ Route::middleware(['auth'])->group(function () {
             });
         });
 });
-    
-   
+Route::middleware(typeAccount::class.':admin')->group(function(){
+    Route::prefix('/admin')->group(function(){
+        Volt::route('/users', 'admin.users')->name('admin.users');
+        Volt::route('/transaction', 'admin.transaction')->name('admin.transaction');
+        Volt::route('/services', 'admin.services')->name('admin.services');
+    });
 });
 
 require __DIR__.'/auth.php';
