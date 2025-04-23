@@ -5,10 +5,7 @@ use Livewire\Volt\Volt;
 use App\Http\Middleware\typeAccount;
 
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-
+Route::redirect('/', '/login', 301)->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
