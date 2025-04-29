@@ -21,7 +21,7 @@ class MessageController extends Controller
                 $user2 = max($message->send_id, $message->recv_id);
                 return $user1 . '-' . $user2;
             })
-            ->filter()x
+            ->filter()
             ->values();
     
         return response()->json([
