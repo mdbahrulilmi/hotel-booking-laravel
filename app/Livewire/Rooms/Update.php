@@ -62,7 +62,7 @@ class Update extends Component
         'price_per_night' => 'required|numeric|min:0',
         'available_quantity' => 'required|integer|min:1',
         'capacity' => 'required|integer|min:1',
-        'uploadedImages' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'uploadedImages.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     $pathImages = [];
