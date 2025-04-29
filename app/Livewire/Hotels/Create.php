@@ -63,7 +63,7 @@ class Create extends Component
         'phone_number' => 'required|string|max:20',
         'status' => 'required|in:active,inactive',
         'is_verified' => 'required|boolean',
-        'uploadedImages' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'uploadedImages.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
     $pathImages = [];

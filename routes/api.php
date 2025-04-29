@@ -1,77 +1,38 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HotelController;
+use App\Http\Controllers\Api\RoomController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\MessageController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Login route
+Route::post('login', [AuthController::class,'login']);
 
-// Authentication
+// Register route
+Route::post('register', [AuthController::class,'register']);
 
-Route::post('/register', function ($id) {
-    return;
+Route::middleware('auth:sanctum')->group(function(){
+Route::prefix('/room')->group(function(){
+    Route::get('/', [RoomController::class,'index']);
+    Route::post('/create', [RoomController::class,'store']);
+    Route::post('/update', [RoomController::class,'update']);
 });
-
-Route::post('/login', function ($id) {
-    return;
+Route::prefix('/hotel')->group(function(){
+    Route::get('/', [HotelController::class,'show']);
+    Route::post('/create', [HotelController::class,'store']);
+    Route::post('/update', [HotelController::class,'update']);
 });
-
-Route::post('/logout', function ($id) {
-    return;
+Route::prefix('/booking')->group(function(){
+    Route::get('/', [BookingController::class,'index']);
+    Route::post('/create', [BookingController::class,'store']);
+    Route::post('/update', [BookingController::class,'update']);
 });
-
-// Get Data Hotels and Rooms
-
-Route::get('/hotels', function ($id) {
-    return;
+Route::prefix('/message')->group(function(){
+    Route::get('/', [MessageController::class,'index']);
+    Route::post('/create', [MessageController::class,'store']);
+    Route::post('/update', [MessageController::class,'update']);
 });
-
-Route::get('/hotels/{id}', function ($id) {
-    return;
-});
-
-Route::get('/rooms?hotel_id=1', function ($id) {
-    return;
-});
-
-Route::get('/rooms/{id}', function ($id) {
-    return;
-});
-
-// Booking
-
-Route::post('/bookings', function ($id) {
-    return;
-});
-
-Route::get('/bookings/{id}', function ($id) {
-    return;
-});
-
-Route::put('/bookings/{id}', function ($id) {
-    return;
-});
-
-// Payment
-Route::post('/payments', function ($id) {
-    return;
-});
-
-// Reviews
-Route::post('reviews', function ($id) {
-    return; 
-});
-
-Route::get('reviews?hotel_id=1', function ($id) {
-    return; 
-});
-
-// Live Chat
-Route::post('live-chat', function ($id) {
-    return; 
-});
-
-Route::get('live-chat?hotel_id=1', function ($id) {
-    return; 
 });
